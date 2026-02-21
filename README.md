@@ -2,6 +2,6 @@
 
 [![Litz's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Tangzishun-Li&theme=github-compact)](https://github.com/ashutosh00710/github-readme-activity-graph)
 
-![Litz's GitHub stats](https://github-readme-stats.vercel.app/api?username=Tangzishun-Li&show_icons=true&theme=transparent)
+![Stats](./profile/stats.svg)
 
-<div align="center"> <img src="https://visitor-badge.glitch.me/badge?page_id=Tangzishun-Li" /> </div>
+![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=Tangzishun-Li.visitor-badge)
