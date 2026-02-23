@@ -2,27 +2,36 @@ name: Update README cards
 
 on:
   schedule:
-    - cron: "0 3 * * *"
-  workflow_dispatch:
+    - cron: "0 3 * * *"  # 每天3点自动更新（UTC时间）
+  workflow_dispatch:      # 支持手动触发
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  # 检出代码
 
-      - name: Generate stats card
+      - name: Generate stats card  # 生成GitHub统计卡片
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: stats
-          options: username=Tangzishun-Li&show_icons=true
+          options: username=${{ github.repository_owner }}&show_icons=true&theme=radical
           path: profile/stats.svg
+          token: ${{ secrets.GITHUB_TOKEN }}  # 默认使用GITHUB_TOKEN（仅公开统计）
+
+      - name: Generate top languages card  # 生成常用语言卡片
+        uses: readme-tools/github-readme-stats-action@v1
+        with:
+          card: top-langs
+          options: username=${Tangzishun-Li}&layout=compact&langs_count=8
+          path: profile/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit cards
+      - name: Commit cards  # 提交生成的SVG文件
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
+          mkdir -p profile
           git add profile/*.svg
-          git commit -m "Update README cards" || exit 0
+          git commit -m "Update README cards" || exit 0  # 无变更时不报错
           git push
