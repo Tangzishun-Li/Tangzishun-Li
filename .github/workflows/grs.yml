@@ -5,9 +5,9 @@ on:
     - cron: "0 3 * * *"  # 每天3点自动更新（UTC时间）
   workflow_dispatch:      # 支持手动触发
 
-# 新增：显式授予写入仓库内容的权限（解决403核心问题）
+# 显式声明工作流需要的权限（关键修复1）
 permissions:
-  contents: write
+  contents: write  # 授予写入仓库内容的权限
 
 jobs:
   build:
@@ -15,19 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false  # 禁用默认凭证，避免权限冲突
-          fetch-depth: 0  # 拉取完整仓库历史，防止提交冲突
+          persist-credentials: false  # 禁用默认凭证（关键修复2）
+          fetch-depth: 0  # 拉取完整仓库历史，避免提交冲突
 
-      - name: Generate stats card  # 生成GitHub统计卡片
+      - name: Generate stats card
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: stats
-          # 关键修改：将theme改为transparent，保留show_icons=true（匹配你想要的卡片样式）
           options: username=${{ github.repository_owner }}&show_icons=true&theme=transparent
           path: profile/stats.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate top languages card  # 生成常用语言卡片
+      - name: Generate top languages card
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: top-langs
@@ -35,13 +34,12 @@ jobs:
           path: profile/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit cards  # 提交生成的SVG文件
+      - name: Commit & push cards（关键修复3）
         run: |
-          # 修正：使用标准的github-actions[bot]用户名（更规范）
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           mkdir -p profile
           git add profile/*.svg
           git commit -m "Update README cards" || exit 0  # 无变更时不报错
-          # 关键修改：使用带令牌的URL推送（解决403权限问题）
+          # 使用带令牌的URL推送，解决权限验证问题
           git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
