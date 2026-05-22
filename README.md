@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:333333,100:666666&height=220&section=header&text=Litz&fontSize=72&fontAlignY=32&animation=fadeIn&desc=&descAlignY=52&descSize=0" />
+  <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0d1117,50:333333,100:555555&height=140&section=header&text=%F0%9F%9A%A7%20%E6%96%BD%E5%B7%A5%E4%B8%AD&fontSize=52&fontAlignY=55" />
+</p>
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0d1117,50:444444,100:777777&height=120&section=header&text=Hi%2C%20I'm%20Litz&fontSize=48&fontAlignY=55&animation=fadeIn" />
 </p>
 
 <br />
